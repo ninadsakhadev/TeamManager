@@ -23,6 +23,7 @@ namespace TeamManager.WebAPI.Controllers
         public List<Team> Get()
         {
             // write another get that works
+            // make sure that this also gets into the file. 
             List<Team> teams = teamService.GetAllTeams().ToList();
             return teams;
         }
