@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamManager.Service", "ReadingList.Service\TeamManager.Service.csproj", "{549B2063-2B0B-49CB-A22E-CC520F0176A5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamManager.Service", "TeamManager.Service\TeamManager.Service.csproj", "{549B2063-2B0B-49CB-A22E-CC520F0176A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamManager.DAL", "ReadingList.DAL\TeamManager.DAL.csproj", "{F3D132B2-A23E-4B23-9AFA-64299FD695D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamManager.DAL", "TeamManager.DAL\TeamManager.DAL.csproj", "{F3D132B2-A23E-4B23-9AFA-64299FD695D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamManager.Domain", "ReadingList.Domain\TeamManager.Domain.csproj", "{39EEEF98-9FCD-41CF-B8EB-CF2D9210DE19}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamManager.Domain", "TeamManager.Domain\TeamManager.Domain.csproj", "{39EEEF98-9FCD-41CF-B8EB-CF2D9210DE19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamManager.WebAPI", "ReadingList.WebAPI\TeamManager.WebAPI.csproj", "{E5DD5DE4-7166-48E2-B881-C709E7AA5841}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamManager.WebAPI", "TeamManager.WebAPI\TeamManager.WebAPI.csproj", "{E5DD5DE4-7166-48E2-B881-C709E7AA5841}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
