@@ -14,6 +14,8 @@ namespace TeamManager.Service
 
         IEnumerable<Team> GetAllTeams();
 
+        Team GetById(int id, params Expression<Func<Team, object>>[] includeExpressions);
+
         //IEnumerable<Link> Find(Expression<Func<Link, bool>> predicate);
     }
 }

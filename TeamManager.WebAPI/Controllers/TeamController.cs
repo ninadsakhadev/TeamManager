@@ -7,6 +7,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using TeamManager.WebAPI.Models;
+using AutoMapper;
 
 namespace TeamManager.WebAPI.Controllers
 {
@@ -20,18 +22,49 @@ namespace TeamManager.WebAPI.Controllers
             this.unitOfWork = unitOfWork;
         }
         // GET api/<controller>
-        public List<Team> Get()
+        public IHttpActionResult Get()
         {
-            // write another get that works
+            try
+            {
+                List<Team> teams = teamService.GetAllTeams().ToList();
+                if (teams == null || teams.Count == 0)
+                {
+                    return NotFound();
+                }
+                else
+                { 
+                    return Ok(Mapper.Map<List<TeamDTO>>(teams));
+                }
+                
+            }
+            catch
+            {
+                return InternalServerError();
+            }
             // make sure that this also gets into the file. 
-            List<Team> teams = teamService.GetAllTeams().ToList();
-            return teams;
+            
         }
 
         // GET api/<controller>/5
-        public string Get(int id)
+        public IHttpActionResult Get(int id)
         {
-            return "value";
+            try
+            {
+                Team team = teamService.GetById(id);
+                if (team == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return Ok(Mapper.Map<TeamDTO>(team));
+                }
+
+            }
+            catch
+            {
+                return InternalServerError();
+            }
         }
 
         // POST api/<controller>

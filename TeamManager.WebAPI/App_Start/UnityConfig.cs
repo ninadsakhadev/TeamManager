@@ -21,7 +21,9 @@ namespace TeamManager.WebAPI
                 .RegisterType<IUnitOfWork, UnitOfWork>()
                 .RegisterType<IRepository<Team>, Repository<Team>>()
                 //    .RegisterType<IRepositoryAsync<Product>, Repository<Product>>()
-                .RegisterType<ITeamService, TeamService>();
+                .RegisterType<ITeamService, TeamService>()
+                .RegisterType<IMemberService, MemberService>()
+               .RegisterType<IRepository<Member>, Repository<Member>>();
             // register all your components with the container here
             // it is NOT necessary to register your controllers
             

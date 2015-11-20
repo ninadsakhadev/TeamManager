@@ -20,6 +20,7 @@ namespace TeamManager.WebAPI
         {
             UnityConfig.RegisterComponents(); 
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            AutoMapperConfig.Map();
             //var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
 
             //var xml = GlobalConfiguration.Configuration.Formatters.XmlFormatter;
@@ -29,7 +30,7 @@ namespace TeamManager.WebAPI
             var json = new JsonMediaTypeFormatter();
             //var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             json.SerializerSettings.PreserveReferencesHandling =
-                Newtonsoft.Json.PreserveReferencesHandling.All;
+                Newtonsoft.Json.PreserveReferencesHandling.None;
             json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             GlobalConfiguration.Configuration.Formatters.Clear();
             GlobalConfiguration.Configuration.Formatters.Add(json);

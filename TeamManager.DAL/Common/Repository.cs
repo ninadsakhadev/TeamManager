@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TeamManager.Domain;
@@ -33,6 +34,34 @@ namespace TeamManager.DAL.Common
         public virtual IEnumerable<T> GetAllWithIncludes(string predicate)
         {
             return dbSet.Include<T>(predicate).AsEnumerable<T>();
+        }
+
+        public virtual T GetByIdWithIncludes(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeExpressions)
+        {
+            if (includeExpressions.Any())
+            {
+                var set = includeExpressions.Aggregate<Expression<Func<T, object>>, IQueryable<T>>
+                         (this.dbSet, (current, expression) => current.Include(expression));
+
+                return set.SingleOrDefault(predicate);
+            }
+
+            return dbSet.Where(predicate).FirstOrDefault();
+        }
+
+        public virtual T GetByIdWithIncludes(Expression<Func<T, bool>> predicate, string includeExpressions = "")
+        {
+            var query = dbSet.AsQueryable<T>();
+            if (includeExpressions.Length > 0)
+            {
+                string[] includeExpressionsList = includeExpressions.Split(',');
+                foreach (string includeExpression in includeExpressionsList)
+                {
+                    query = query.Include(includeExpression);
+                }
+            }
+
+            return query.Where(predicate).FirstOrDefault();
         }
 
         public IEnumerable<T> FindBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate)

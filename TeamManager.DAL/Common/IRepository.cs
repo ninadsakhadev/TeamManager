@@ -15,6 +15,8 @@ namespace TeamManager.DAL.Common
 
         IEnumerable<T> GetAllWithIncludes(string predicate);
         IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate);
+        T GetByIdWithIncludes(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includeExpressions);
+        T GetByIdWithIncludes(Expression<Func<T, bool>> predicate, string includeExpressions);
         void Add(T entity);
         void Delete(T entity);
         void Edit(T entity);

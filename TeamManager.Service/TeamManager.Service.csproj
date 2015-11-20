@@ -39,8 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\Class1.cs" />
+    <Compile Include="Interfaces\IMemberService.cs" />
     <Compile Include="Interfaces\ITeamService.cs" />
     <Compile Include="Interfaces\ILinkService.cs" />
+    <Compile Include="MemberService.cs" />
     <Compile Include="TeamService.cs" />
     <Compile Include="LinkService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
