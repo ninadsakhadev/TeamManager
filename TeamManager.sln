@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamManager.WebAPI", "TeamM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamManager.IdSrv", "TeamManager.IdSrv\TeamManager.IdSrv.csproj", "{7D412F42-410A-4BFC-A9D7-23A35548A2DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamManager.Constants", "TeamManager.Constants\TeamManager.Constants.csproj", "{B735C7E7-09FC-4F74-8D14-99C229075A8D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{7D412F42-410A-4BFC-A9D7-23A35548A2DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D412F42-410A-4BFC-A9D7-23A35548A2DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D412F42-410A-4BFC-A9D7-23A35548A2DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B735C7E7-09FC-4F74-8D14-99C229075A8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B735C7E7-09FC-4F74-8D14-99C229075A8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B735C7E7-09FC-4F74-8D14-99C229075A8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B735C7E7-09FC-4F74-8D14-99C229075A8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

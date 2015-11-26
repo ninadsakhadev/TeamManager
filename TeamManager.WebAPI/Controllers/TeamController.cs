@@ -9,40 +9,47 @@ using System.Net.Http;
 using System.Web.Http;
 using TeamManager.WebAPI.Models;
 using AutoMapper;
-
+using TeamManager.WebAPI.Helpers;
+using System.Web.Http.Routing;
+using System.Web;
 namespace TeamManager.WebAPI.Controllers
 {
-    public class TeamController : ApiController
+    public class TeamController : BaseController
     {
         ITeamService teamService;
-        IUnitOfWork unitOfWork;
-        public TeamController(ITeamService teamService, IUnitOfWork unitOfWork)
+
+        public TeamController(ITeamService teamService)
         {
             this.teamService = teamService;
-            this.unitOfWork = unitOfWork;
         }
         // GET api/<controller>
-        public IHttpActionResult Get()
+        [Route("api/team", Name = "Teams")]
+        public IHttpActionResult Get(string sort = "id", int page = 1, int pageSize = 1)
         {
             try
             {
-                List<Team> teams = teamService.GetAllTeams().ToList();
-                if (teams == null || teams.Count == 0)
+                var teams = teamService.GetAllTeams().ApplySort(sort);
+
+                if (teams == null || teams.Count() == 0)
                 {
                     return NotFound();
                 }
                 else
-                { 
+                {
+                    base.AddPagination(teams, page, pageSize, "Teams", sort);
+
+                    teams = teams.Skip(pageSize * (page - 1)).Take(pageSize);
+
                     return Ok(Mapper.Map<List<TeamDTO>>(teams));
                 }
-                
+
             }
             catch
             {
                 return InternalServerError();
             }
             // make sure that this also gets into the file. 
-            
+
         }
 
         // GET api/<controller>/5
@@ -50,7 +57,7 @@ namespace TeamManager.WebAPI.Controllers
         {
             try
             {
-                Team team = teamService.GetById(id);
+                Team team = teamService.GetById(id, t => t.Members);
                 if (team == null)
                 {
                     return NotFound();

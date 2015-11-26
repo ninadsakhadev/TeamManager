@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using TeamManager.Constants;
 using Thinktecture.IdentityServer.Core.Models;
 
 namespace TeamManager.IdSrv.Config
@@ -21,7 +22,7 @@ namespace TeamManager.IdSrv.Config
                     RequireConsent=true,
                     RedirectUris=new List<string>
                     {
-
+                        TeamManagerConstants.TeamManagerAPI
                     }
                 }
             };

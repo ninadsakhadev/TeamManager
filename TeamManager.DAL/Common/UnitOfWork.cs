@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TeamManager.Domain.Common;
 
 namespace TeamManager.DAL.Common
 {
@@ -17,6 +19,8 @@ namespace TeamManager.DAL.Common
         /// </summary>
         private IDataContext dbContext;
 
+        private Hashtable repositories;
+
         /// <summary>
         /// Initializes a new instance of the UnitOfWork class.
         /// </summary>
@@ -27,7 +31,26 @@ namespace TeamManager.DAL.Common
             dbContext = context;
         }
 
+        public IRepository<T> Repository<T>() where T : Entity
+        {
+            if (repositories == null)
+                repositories = new Hashtable();
 
+            var type = typeof(T).Name;
+
+            if (!repositories.ContainsKey(type))
+            {
+                var repositoryType = typeof(Repository<>);
+
+                var repositoryInstance =
+                    Activator.CreateInstance(repositoryType
+                            .MakeGenericType(typeof(T)), dbContext);
+
+                repositories.Add(type, repositoryInstance);
+            }
+
+            return (IRepository<T>)repositories[type];
+        }
 
         /// <summary>
         /// Saves all pending changes

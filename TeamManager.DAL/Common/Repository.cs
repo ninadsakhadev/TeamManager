@@ -26,14 +26,14 @@ namespace TeamManager.DAL.Common
             }
         }
 
-        public virtual IEnumerable<T> GetAll()
+        public virtual IQueryable<T> GetAll()
         {
-            return dbSet.AsEnumerable<T>();
+            return dbSet.AsQueryable<T>();
         }
 
-        public virtual IEnumerable<T> GetAllWithIncludes(string predicate)
+        public virtual IQueryable<T> GetAllWithIncludes(string predicate)
         {
-            return dbSet.Include<T>(predicate).AsEnumerable<T>();
+            return dbSet.Include<T>(predicate).AsQueryable<T>();
         }
 
         public virtual T GetByIdWithIncludes(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeExpressions)
@@ -64,11 +64,23 @@ namespace TeamManager.DAL.Common
             return query.Where(predicate).FirstOrDefault();
         }
 
-        public IEnumerable<T> FindBy(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
+        public IQueryable<T> FindBy(Expression<Func<T, bool>> predicate)
         {
 
-            IEnumerable<T> query = dbSet.Where(predicate).AsEnumerable();
-            return query;
+            return dbSet.Where(predicate).AsQueryable();
+        }
+
+        public IQueryable<T> FindByWithIncludes(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeExpressions)
+        {
+            if (includeExpressions.Any())
+            {
+                var set = includeExpressions.Aggregate<Expression<Func<T, object>>, IQueryable<T>>
+                         (this.dbSet, (current, expression) => current.Include(expression));
+
+                return set.Where(predicate).AsQueryable();
+            }
+
+            return dbSet.Where(predicate).AsQueryable();
         }
 
         public virtual void Add(T entity)

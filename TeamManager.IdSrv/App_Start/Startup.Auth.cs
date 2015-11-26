@@ -2,6 +2,11 @@
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
+using System;
+using System.Security.Cryptography.X509Certificates;
+using TeamManager.Constants;
+using TeamManager.IdSrv.Config;
+using Thinktecture.IdentityServer.Core.Configuration;
 
 namespace TeamManager.IdSrv
 {
@@ -11,13 +16,13 @@ namespace TeamManager.IdSrv
         public void ConfigureAuth(IAppBuilder app)
         {
             // Enable the application to use a cookie to store information for the signed in user
-            app.UseCookieAuthentication(new CookieAuthenticationOptions
-            {
-                AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login")
-            });
-            // Use a cookie to temporarily store information about a user logging in with a third party login provider
-            app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
+            //app.UseCookieAuthentication(new CookieAuthenticationOptions
+            //{
+            //    AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+            //    LoginPath = new PathString("/Account/Login")
+            //});
+            //// Use a cookie to temporarily store information about a user logging in with a third party login provider
+            //app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Uncomment the following lines to enable logging in with third party login providers
             //app.UseMicrosoftAccountAuthentication(
@@ -33,6 +38,22 @@ namespace TeamManager.IdSrv
             //   appSecret: "");
 
             //app.UseGoogleAuthentication();
+
+            app.Map("/identity", idsrvApp =>
+                {
+                    idsrvApp.UseIdentityServer(new IdentityServerOptions
+                    {
+                        SiteName="Embedded IdentityServer",
+                        IssuerUri=TeamManagerConstants.IdSrvIssuerUri,
+                        Factory=InMemoryFactory.Create(users:Users.Get(),clients:Clients.Get(),scopes:Scopes.Get()),
+                        SigningCertificate=LoadCertificate()
+                    });
+                });
+        }
+
+        private X509Certificate2 LoadCertificate()
+        {
+            return new X509Certificate2(string.Format(@"{0}\certificates\idsrv3test.pfx", AppDomain.CurrentDomain.BaseDirectory), "idsrv3test");
         }
     }
 }

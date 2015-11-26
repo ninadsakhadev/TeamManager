@@ -27,13 +27,7 @@ namespace TeamManager.WebAPI
             //var dcs = new System.Runtime.Serialization.DataContractSerializer(typeof(Department), null, int.MaxValue,
             //    false, /* preserveObjectReferences: */ true, null);
             //xml.SetSerializer<Department>(dcs);
-            var json = new JsonMediaTypeFormatter();
-            //var json = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
-            json.SerializerSettings.PreserveReferencesHandling =
-                Newtonsoft.Json.PreserveReferencesHandling.None;
-            json.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            GlobalConfiguration.Configuration.Formatters.Clear();
-            GlobalConfiguration.Configuration.Formatters.Add(json);
+            
         }
     }
 }

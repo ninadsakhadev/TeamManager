@@ -11,11 +11,13 @@ namespace TeamManager.Service
 {
     public class TeamService : ITeamService
     {
+        IUnitOfWork unitOfWork;
         IRepository<Team> repository;
 
-        public TeamService(IRepository<Team> repository)
+        public TeamService(IUnitOfWork unitOfWork)
         {
-            this.repository = repository;
+            this.unitOfWork = unitOfWork;
+            this.repository = unitOfWork.Repository<Team>();
         }
 
         public void AddLink(Team team)
@@ -23,7 +25,7 @@ namespace TeamManager.Service
             repository.Add(team);
         }
 
-        public IEnumerable<Team> GetAllTeams()
+        public IQueryable<Team> GetAllTeams()
         {
             return repository.GetAllWithIncludes("Members");
         }

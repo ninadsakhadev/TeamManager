@@ -9,10 +9,11 @@ using TeamManager.DAL.Common;
 using TeamManager.Domain;
 using TeamManager.Service;
 using TeamManager.WebAPI.Models;
+using TeamManager.WebAPI.Helpers;
 
 namespace TeamManager.WebAPI.Controllers
 {
-    public class MembersController : ApiController
+    public class MembersController : BaseController
     {
         ITeamService teamService;
         IMemberService memberService;
@@ -21,7 +22,6 @@ namespace TeamManager.WebAPI.Controllers
         {
             this.teamService = teamService;
             this.memberService = memberService;
-            this.unitOfWork = unitOfWork;
         }
         // GET api/<controller>
         //public List<TeamDTO> Get()
@@ -33,22 +33,24 @@ namespace TeamManager.WebAPI.Controllers
         //}
 
         // GET api/<controller>/5
-        [Route("api/team/{id}/members")]
-        public IHttpActionResult Get(int id)
+        [Route("api/team/{id}/members", Name = "Members")]
+        public IHttpActionResult Get(int id, int page = 1, int pageSize = 1, string sort = "id")
         {
             try
             {
-                List<Member> members = teamService.GetById(id).Members.ToList();
+                var members = memberService.GetAllMembersByTeam(id).ApplySort(sort);
                 if (members == null)
                 {
                     return NotFound();
                 }
                 else
                 {
-                    return Ok(Mapper.Map<List<MemberDTO>>(members));
+                    base.AddPagination(members, page, pageSize, "Members", sort);
+                    members = members.Skip(pageSize * (page - 1)).Take(pageSize);
+                    return Ok(Mapper.Map<List<MemberDTO>>(members.ToList()));
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 return InternalServerError();
             }
@@ -57,7 +59,7 @@ namespace TeamManager.WebAPI.Controllers
         // GET api/<controller>/5
         [Route("api/members/{memberid}")]
         [Route("api/team/{teamid}/members/{memberid}")]
-        public IHttpActionResult Get(int memberid, int? teamid=null)
+        public IHttpActionResult Get(int memberid, int? teamid = null)
         {
             try
             {
@@ -68,7 +70,7 @@ namespace TeamManager.WebAPI.Controllers
                 }
                 else
                 {
-                    if (teamService.GetById((int)teamid,t=>t.Members).Members.Any(t => t.Id == memberid))
+                    if (teamService.GetById((int)teamid, t => t.Members).Members.Any(t => t.Id == memberid))
                     {
                         member = memberService.GetById(memberid);
                     }

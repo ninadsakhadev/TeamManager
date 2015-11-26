@@ -12,7 +12,7 @@ namespace TeamManager.Service
     {
         void AddLink(Team team);
 
-        IEnumerable<Team> GetAllTeams();
+        IQueryable<Team> GetAllTeams();
 
         Team GetById(int id, params Expression<Func<Team, object>>[] includeExpressions);
 

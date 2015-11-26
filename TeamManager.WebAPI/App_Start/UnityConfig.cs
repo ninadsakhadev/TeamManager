@@ -7,6 +7,7 @@ using System.Web.Http;
 using Unity.WebApi;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using TeamManager.WebAPI.Helpers;
 
 
 namespace TeamManager.WebAPI
@@ -20,14 +21,9 @@ namespace TeamManager.WebAPI
                 .RegisterType<IDataContext, TeamManagerContext>()
                 .RegisterType<IUnitOfWork, UnitOfWork>()
                 .RegisterType<IRepository<Team>, Repository<Team>>()
-                //    .RegisterType<IRepositoryAsync<Product>, Repository<Product>>()
                 .RegisterType<ITeamService, TeamService>()
                 .RegisterType<IMemberService, MemberService>()
                .RegisterType<IRepository<Member>, Repository<Member>>();
-            // register all your components with the container here
-            // it is NOT necessary to register your controllers
-            
-            // e.g. container.RegisterType<ITestService, TestService>();
             
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }

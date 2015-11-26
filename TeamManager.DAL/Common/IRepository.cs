@@ -11,10 +11,11 @@ namespace TeamManager.DAL.Common
     public interface IRepository<T> where T : Entity
     {
 
-        IEnumerable<T> GetAll();
+        IQueryable<T> GetAll();
 
-        IEnumerable<T> GetAllWithIncludes(string predicate);
-        IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate);
+        IQueryable<T> GetAllWithIncludes(string predicate);
+        IQueryable<T> FindBy(Expression<Func<T, bool>> predicate);
+        IQueryable<T> FindByWithIncludes(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeExpressions);
         T GetByIdWithIncludes(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includeExpressions);
         T GetByIdWithIncludes(Expression<Func<T, bool>> predicate, string includeExpressions);
         void Add(T entity);

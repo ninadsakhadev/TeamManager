@@ -12,7 +12,9 @@ namespace TeamManager.Service
     {
         void AddMember(Member team);
 
-        IEnumerable<Member> GetAllMembers();
+        IQueryable<Member> GetAllMembers();
+
+        IQueryable<Member> GetAllMembersByTeam(int id);
 
         Member GetById(int id);
 

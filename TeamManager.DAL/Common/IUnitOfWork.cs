@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TeamManager.Domain.Common;
 
 namespace TeamManager.DAL.Common
 {
@@ -14,5 +15,7 @@ namespace TeamManager.DAL.Common
         /// </summary>
         /// <returns>The number of objects in an Added, Modified, or Deleted state</returns>
         int Commit();
+
+        IRepository<T> Repository<T>() where T : Entity;
     }
 }
